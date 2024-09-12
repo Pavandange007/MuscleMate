@@ -1,0 +1,21 @@
+<?php
+
+$username = $_POST['username'];
+$password = $_POST['password'];
+
+$conn = mysqli_connect("localhost", "username", "password", "database");
+
+$result = mysqli_query($conn, "SELECT * FROM users WHERE username='$username' AND password='".md5($password)."'");
+
+if (mysqli_num_rows($result) > 0) {
+    
+    header("Location: protected.php");
+    exit;
+} else {
+    echo "Invalid username or password.";
+    header("Location: index.php");
+    exit;
+}
+
+mysqli_close($conn);
+?>
