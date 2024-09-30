@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - MuscleMate</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+        }
+
+        /* Navbar Styling */
+        header {
+            background-color: #2a2a2a;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header img {
+            max-height: 45px;
+        }
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        nav ul li {
+            margin-left: 20px;
+        }
+        nav ul li a {
+            color: #f8f8f2;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background-color: #4ebe59;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            animation: fadeIn 1.5s ease;
+        }
+        .hero img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.5;
+        }
+        .hero h1 {
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .hero p {
+            font-size: 18px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Mission Section */
+        .section-mission {
+            background-color: rgb(255, 255, 255);
+            padding: 60px 20px;
+            text-align: center;
+            animation: fadeInUp 1.5s ease;
+        }
+        .section-mission h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #67d367;
+        }
+        .section-mission p {
+            font-size: 16px;
+            color: #0e0d0d;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Team Section */
+        .section-team {
+            background-color: #fefefe;
+            padding: 50px 20px;
+            text-align: center;
+            animation: fadeIn 1.5s ease;
+        }
+        .section-team h2 {
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        .team-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .team-member {
+            background-color: rgb(244, 241, 241);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            max-width: 280px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .team-member:hover {
+            transform: scale(1.05);
+        }
+        .team-member img {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+        .team-member h3 {
+            font-size: 20px;
+            color: #0c0000;
+            margin-bottom: 5px;
+        }
+        .team-member p {
+            color: #000000;
+            font-style: italic;
+            font-size: 14px;
+        }
+
+        /* Features Section */
+        .section-features {
+            background-color: #ffffff;
+            padding: 50px 20px;
+            text-align: center;
+            animation: fadeInUp 1.5s ease;
+        }
+        .section-features h2 {
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #ffffff;
+        }
+        .features-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .feature {
+            background-color: rgb(255, 252, 252);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(111, 45, 45, 0.1);
+            flex: 1;
+            min-width: 180px;
+            margin: 10px;
+            text-align: left;
+        }
+        .feature h3 {
+            font-size: 18px;
+            color: #080000;
+            margin-bottom: 10px;
+        }
+        .feature p {
+            font-size: 14px;
+            color: #73b877;
+            line-height: 1.6;
+        }
+
+        /* Call to Action */
+        .cta-section {
+            background-color: #5dde62;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            animation: fadeIn 1.5s ease;
+        }
+        .cta-section h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        .cta-button {
+            background-color: #fff;
+            color: #4CAF50;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .cta-button:hover {
+            background-color: #45a049;
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #2a2a2a;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="images/logo2.png" alt="MuscleMate Logo">
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Login</a></li>
+                <li><a href="#">About Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        
+        <h1>About MuscleMate</h1>
+        <p>Your one-stop solution for all your fitness and wellness needs.</p>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="section-mission">
+        <h2>Our Mission</h2>
+        <p>At MuscleMate, our mission is to empower individuals to live healthier and stronger lives. We offer personalized workout plans, expert advice, and premium-quality supplements to help you achieve your fitness goals.</p>
+    </section>
+
+    <!-- Team Section -->
+    <section class="section-team">
+        <h2>Meet Our Team</h2>
+        <div class="team-grid">
+            <div class="team-member">
+                <img src="images/john-doe.jpg" >
+                <h3>Akash Kolhatkar</h3>
+                <p>Certified Fitness Trainer</p>
+            </div>
+            <div class="team-member">
+                <img src="images/jane-smith.jpg">
+                <h3>Dr. Prateek Rekhade</h3>
+                <p>Nutritionist</p>
+            </div>
+            <div class="team-member">
+                <img src="images/mike-johnson.jpg" >
+                <h3>Atharva Shrotri</h3>
+                <p>Supplement Specialist</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section-features">
+        <h2>Why Choose MuscleMate?</h2>
+        <div class="features-grid">
+            <div class="feature">
+                <h3>Personalized Fitness Plans</h3>
+                <p>Workouts designed specifically for you to meet your unique fitness goals.</p>
+            </div>
+            <div class="feature">
+                <h3>Expert Guidance</h3>
+                <p>Our team of certified professionals ensures you stay on track with expert advice.</p>
+            </div>
+            <div class="feature">
+                <h3>High-Quality Supplements</h3>
+                <p>Only the best, verified supplements to enhance your fitness journey.</p>
+            </div>
+            <div class="feature">
+                <h3>Workout Videos</h3>
+                <p>Access comprehensive workout videos and tutorials to help you perfect your form.</p>
+            </div>
+            <div class="feature">
+                <h3>Motivational Community</h3>
+                <p>Join a supportive community that keeps you motivated throughout your journey.</p>
+            </div>
+            <div class="feature">
+                <h3>Regular Updates</h3>
+                <p>Stay informed with the latest fitness trends and research to optimize your results.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta-section">
+        <h2>Join MuscleMate Today!</h2>
+        <a href="index.html" class="cta-button">Start Your Fitness Journey</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 MuscleMate. All Rights Reserved.</p>
+        <p>For inquiries, contact us at musclemate225@gmail.com</p>
+    </footer>
+
+</body>
+</html>
+
