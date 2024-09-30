@@ -1,117 +1,60 @@
 <!DOCTYPE html>
-<html style="font-size: 16px;" lang="en">
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="utf-8">
-    <meta name="keywords" content="">
-    <meta name="description" content="">
     <title>BMI Calculator</title>
-    <link rel="stylesheet" href="nicepage.css" media="screen">
-    <link rel="stylesheet" href="bmi.css" media="screen">
-    <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
-    <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
-    <meta name="generator" content="Nicepage 6.16.5, nicepage.com">
-    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
-    <meta name="theme-color" content="#478ac9">
-    <meta property="og:title" content="bmi">
-    <meta property="og:type" content="website">
+    <link rel="stylesheet" href="bmi.css">
 </head>
-<body data-path-to-root="./" data-include-products="false" class="u-body u-xl-mode" data-lang="en">
-
-<header class="u-clearfix u-grey-90 u-header u-header" id="sec-06b3">
-    <div class="u-clearfix u-sheet u-sheet-1">
-        <a href="#" class="u-image u-logo u-image-1" data-image-width="1285" data-image-height="299">
-            <img src="images/logo2.png" class="u-logo-image u-logo-image-1">
-        </a>
-        <nav class="u-menu u-menu-one-level u-offcanvas u-menu-1" data-responsive-from="MD">
-            <div class="menu-collapse">
-                <a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base u-text-white" href="#">
-                    <svg class="u-svg-link" viewBox="0 0 24 24">
-                        <use xlink:href="#menu-hamburger"></use>
-                    </svg>
-                    <svg class="u-svg-content" id="menu-hamburger" viewBox="0 0 16 16">
-                        <g>
-                            <rect y="1" width="16" height="2"></rect>
-                            <rect y="7" width="16" height="2"></rect>
-                            <rect y="13" width="16" height="2"></rect>
-                        </g>
-                    </svg>
-                </a>
+<body class="grid">
+    <div class="container">
+        <h1>BMI Calculator</h1>
+        <div class="input-group">
+            <div class="input-wrapper">
+                <h4>Add Your Weight (KG)</h4>
+                <input type="number" class="input" id="weight" placeholder="e.g., 70" min="1" step="1">
             </div>
-            <div class="u-custom-menu u-nav-container">
-                <ul class="u-nav u-spacing-20 u-unstyled u-nav-1">
-                    <li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base u-text-white" href="./" style="padding: 10px;">Home</a></li>
-                    <li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base u-text-white" href="login.html" style="padding: 10px;">Login</a></li>
-                </ul>
-            </div>
-        </nav>
-    </div>
-</header>
-
-<section class="u-clearfix u-custom-color-2 u-section-1" id="sec-bf5a">
-    <div class="u-clearfix u-sheet u-sheet-1">
-        <div class="u-clearfix u-custom-html u-expanded-width u-custom-html-1">
-            <header>
-                <p>BMI Calculator:</p>
-            </header>
-            <div class="container">
-                <div class="inner-container">
-                    <form id="bmi-form">
-                        <div class="container">
-                            <center>
-                                <label for="weight">Weight (kg):</label>
-                                <input type="number" id="weight" name="weight" required>
-                                <br><br>
-                                <label for="height">Height (cm):</label>
-                                <input type="number" id="height" name="height" required>
-                                <br><br>
-                               
-                                
-                                <br><br>
-                                <button type="submit" style="background-color: #2E865F; color: #FFFFFF; border: none; border-radius: 5px; padding: 10px 20px; cursor: pointer;">Calculate BMI</button>
-                            </center>
-                        </div>
-                    </form>
-                    <div class="bmi-result">
-                        <p id="bmi-status"></p>
-                        <p>Your BMI is: <span id="bmi-value"></span></p>
-                    </div>
-                </div>
+            <div class="input-wrapper">
+                <h4>Add Your Height (CM)</h4>
+                <input type="number" class="input" id="height" placeholder="e.g., 175" min="1" step="1">
             </div>
         </div>
-        <a href="index.html" class="u-align-right u-btn u-btn-round u-button-style u-custom-color-1 u-hover-palette-1-light-1 u-radius u-btn-1">GO BACK</a>
+        <button id="calculate-btn"><span>Calculate</span></button>
+        <div class="result-container">
+            <div id="bmi-result" class="bmi-result"></div>
+            <div id="bmi-description"></div>
+        </div>
     </div>
-</section>
+    <script>
+        const calculateBtn = document.getElementById('calculate-btn');
+        calculateBtn.addEventListener('click', calculateBMI);
 
-<script>
-    document.getElementById('bmi-form').addEventListener('submit', function(event) {
-        event.preventDefault(); 
-        const weight = parseFloat(document.getElementById('weight').value);
-        const heightCm = parseFloat(document.getElementById('height').value);
+        function calculateBMI() {
+            const weight = parseInt(document.getElementById('weight').value);
+            const height = parseInt(document.getElementById('height').value);
 
-        if (!isNaN(weight) && !isNaN(heightCm) && weight > 0 && heightCm > 0) {
-            const heightM = heightCm / 100; 
-            const bmi = (weight / (heightM * heightM));
-
-            document.getElementById('bmi-value').innerText = bmi;
-
-            let status;
-            if (bmi < 18.5) {
-                status = "Underweight";
-            } else if (bmi >= 18.5 && bmi <= 24.9) {
-                status = "Normal weight";
-            } else if (bmi >= 25 && bmi <= 29.9) {
-                status = "Overweight";
-            } else {
-                status = "Obesity";
+            if (isNaN(weight) || isNaN(height) || weight <= 0 || height <= 0) {
+                document.getElementById('bmi-result').textContent = 'Please enter valid weight and height.';
+                document.getElementById('bmi-description').textContent = '';
+                return;
             }
 
-            document.getElementById('bmi-status').innerText = "Status: " + status;
-        } else {
-            alert('Please enter valid weight and height.');
-        }
-    });
-</script>
+            const bmi = weight / Math.pow(height / 100, 2);
+            const bmiResult = document.getElementById('bmi-result');
+            const bmiDescription = document.getElementById('bmi-description');
 
+            bmiResult.textContent = `Your BMI is: ${bmi.toFixed(2)}`;
+
+            if (bmi < 18.5) {
+                bmiDescription.textContent = 'You are underweight.';
+            } else if (bmi < 25) {
+                bmiDescription.textContent = 'You are normal weight.';
+            } else if (bmi < 30) {
+                bmiDescription.textContent = 'You are overweight.';
+            } else {
+                bmiDescription.textContent = 'You are obese.';
+            }
+        }
+    </script>
 </body>
 </html>

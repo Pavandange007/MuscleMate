@@ -1,5 +1,5 @@
  .u-section-1 {
-  background-image: linear-gradient(to right, #0e85f1, #17dd96);
+  background-image: linear-gradient(to right, #8f99a2, #519245);
 }
 
 .u-section-1 .u-sheet-1 {
@@ -19,8 +19,8 @@
 }
 
 .u-section-1 .u-image-1 {
-  width: 282px;
-  left: 30px;
+  width: 250px;
+  left: 48px;
   right: auto;
 }
 
@@ -56,7 +56,9 @@
 }
 
 .u-section-1 .u-image-2 {
-  width: 272px;
+  width: 250px;
+  left: 30px;
+  right: auto;
 }
 
 .u-section-1 .u-layout-cell-4 {
@@ -91,7 +93,9 @@
 }
 
 .u-section-1 .u-image-3 {
-  width: 272px;
+  width: 250px;
+  left: 30px;
+  right: auto;
 }
 
 .u-section-1 .u-layout-cell-6 {
@@ -339,3 +343,4 @@
     margin-right: 46px;
   }
 }
+

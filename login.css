@@ -1,27 +1,3 @@
- .u-section-1 {
-  background-image: linear-gradient(100deg, #0e85f1, #17dd96);
-}
-
-.u-section-1 .u-sheet-1 {
-  min-height: 505px;
-}
-
-.u-section-1 .u-text-1 {
-  font-weight: 700;
-  margin: 38px auto 0;
-}
-
-.u-section-1 .u-btn-1 {
-  --radius: 6px;
-  font-weight: 700;
-  font-size: 0.9375rem;
-  background-image: none;
-  margin: 364px 0 20px auto;
-  padding: 8px 33px;
-}
-/* Font import and global reset */
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
-
 /* Global reset */
 * {
   margin: 0;
