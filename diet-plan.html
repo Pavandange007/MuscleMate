@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Personalized Diet Plan</title>
+    <link rel="stylesheet" href="diet-plan.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Your Personalized Diet Plan</h1>
+            <p>Based on your BMI calculation</p>
+        </div>
+
+        <div class="bmi-info">
+            <h2>Your BMI Status</h2>
+            <p id="bmi-status">Loading...</p>
+            <p id="bmi-recommendation">Customizing your diet plan...</p>
+        </div>
+
+        <div class="diet-grid">
+            <!-- Cards will be dynamically added here -->
+        </div>
+
+        <button class="back-btn" onclick="window.location.href='bmi.html'">
+            Return to Calculator
+        </button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get BMI from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const bmi = parseFloat(urlParams.get('bmi'));
+
+            // Update BMI status
+            const bmiStatus = document.getElementById('bmi-status');
+            const bmiRecommendation = document.getElementById('bmi-recommendation');
+            
+            let category = '';
+            let recommendations = [];
+
+            if (bmi < 18.5) {
+                category = 'Underweight';
+                recommendations = [
+                    { title: 'Breakfast', meals: ['Protein-rich smoothie', 'Oatmeal with nuts', 'Whole grain toast with avocado'] },
+                    { title: 'Lunch', meals: ['Quinoa bowl with chickpeas', 'Grilled chicken sandwich', 'Rice with curry'] },
+                    { title: 'Dinner', meals: ['Pasta with meat sauce', 'Salmon with potatoes', 'Stir-fried noodles'] },
+                    { title: 'Snacks', meals: ['Mixed nuts', 'Protein bars', 'Fruit with peanut butter'] }
+                ];
+            } else if (bmi < 25) {
+                category = 'Normal Weight';
+                recommendations = [
+                    { title: 'Breakfast', meals: ['Greek yogurt with berries', 'Vegetable omelet', 'Whole grain cereal'] },
+                    { title: 'Lunch', meals: ['Mixed salad with protein', 'Turkey wrap', 'Vegetable soup'] },
+                    { title: 'Dinner', meals: ['Grilled fish with vegetables', 'Chicken breast with quinoa', 'Tofu stir-fry'] },
+                    { title: 'Snacks', meals: ['Apple slices', 'Carrot sticks', 'Handful of almonds'] }
+                ];
+            } else if (bmi < 30) {
+                category = 'Overweight';
+                recommendations = [
+                    { title: 'Breakfast', meals: ['Egg white omelet', 'Steel-cut oats', 'Low-fat yogurt parfait'] },
+                    { title: 'Lunch', meals: ['Grilled chicken salad', 'Tuna wrap', 'Lentil soup'] },
+                    { title: 'Dinner', meals: ['Baked fish', 'Turkey breast', 'Vegetable curry'] },
+                    { title: 'Snacks', meals: ['Celery with hummus', 'Rice cakes', 'Green smoothie'] }
+                ];
+            } else {
+                category = 'Obese';
+                recommendations = [
+                    { title: 'Breakfast', meals: ['Protein smoothie', 'Whole grain toast', 'Fruit bowl'] },
+                    { title: 'Lunch', meals: ['Leafy green salad', 'Vegetable soup', 'Grilled chicken'] },
+                    { title: 'Dinner', meals: ['Steamed fish', 'Roasted vegetables', 'Quinoa bowl'] },
+                    { title: 'Snacks', meals: ['Cherry tomatoes', 'Cucumber slices', 'Herbal tea'] }
+                ];
+            }
+
+            bmiStatus.textContent = `Your BMI is ${bmi.toFixed(1)} (${category})`;
+            bmiRecommendation.textContent = `Here's a customized meal plan to help you maintain a healthy lifestyle.`;
+
+            // Create diet cards with dropdown for meal recipes
+            const dietGrid = document.querySelector('.diet-grid');
+            recommendations.forEach((rec, index) => {
+                const card = document.createElement('div');
+                card.className = 'diet-card';
+                card.style.animationDelay = `${0.4 + (index * 0.2)}s`;
+
+                // Creating dropdown for meals
+                card.innerHTML = `
+                    <h3>${rec.title}</h3>
+                    <ul class="meal-list">
+                        ${rec.meals.map(meal => `
+                            <li>
+                                <span class="meal-icon">●</span>
+                                <details>
+                                    <summary>${meal}</summary>
+                                    <p>Recipe for ${meal}</p> <!-- Replace with actual recipes -->
+                                </details>
+                            </li>
+                        `).join('')}
+                    </ul>
+                `;
+
+                dietGrid.appendChild(card);
+            });
+        });
+    </script>
+</body>
+</html>
