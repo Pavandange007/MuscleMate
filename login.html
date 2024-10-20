@@ -1,174 +1,431 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Hacker Login Form | Helpme_coder</title>
-  <link rel="stylesheet" href="login.css">
+    <meta charset="UTF-8">
+    <title>User Login / Sign Up</title>
+    <style>
+      /* Global reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Quicksand', sans-serif;
+    }
 
+    /* Body styling */
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #000;
+    }
+
+    /* Section styles */
+    section {
+      position: absolute;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2px;
+      flex-wrap: wrap;
+      overflow: hidden;
+    }
+
+    /* Animated gradient effect */
+    section::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(#000, #34C759, #000);
+      animation: animate 5s linear infinite;
+    }
+
+    /* Animation keyframes */
+    @keyframes animate {
+      0% {
+        transform: translateY(-100%);
+      }
+      100% {
+        transform: translateY(100%);
+      }
+    }
+
+    /* Styling for individual spans */
+    section span {
+      position: relative;
+      display: block;
+      width: calc(6.25vw - 2px);
+      height: calc(6.25vw - 2px);
+      background: #181818;
+      z-index: 2;
+      transition: 1.5s;
+    }
+
+    section span:hover {
+      background: #34C759;
+      transition: 0s;
+    }
+
+    /* Sign-in form styles */
+    .signin {
+      position: absolute;
+      width: 90%;
+      max-width: 400px;
+      background: #222;
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 30px;
+      border-radius: 4px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9);
+    }
+
+    .signin .content {
+      position: relative;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .signin .content h2 {
+      font-size: 2em;
+      color: #34C759;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .signin .content .form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .signin .content .form .inputBox {
+      position: relative;
+      width: 100%;
+    }
+
+    .signin .content .form .inputBox input {
+      position: relative;
+      width: 100%;
+      background: #333;
+      border: none;
+      outline: none;
+      padding: 25px 10px 7.5px;
+      border-radius: 4px;
+      color: #fff;
+      font-weight: 500;
+      font-size: 1em;
+      margin-bottom: 10px;
+    }
+
+    .signin .content .form .inputBox i {
+      position: absolute;
+      left: 0;
+      padding: 15px 10px;
+      font-style: normal;
+      color: #aaa;
+      transition: 0.5s;
+      pointer-events: none;
+    }
+
+    .signin .content .form .inputBox input:focus ~ i,
+    .signin .content .form .inputBox input:valid ~ i {
+      transform: translateY(-7.5px);
+      font-size: 0.8em;
+      color: #fff;
+    }
+
+    .signin .content .form .links {
+      position: relative;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0;
+    }
+
+    .signin .content .form .links a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .signin .content .form .links a:nth-child(2) {
+      color: #34C759;
+      font-weight: 600;
+    }
+
+    .signin .content .form .inputBox input[type="submit"] {
+      padding: 10px;
+      background: #34C759;
+      color: #000;
+      font-weight: 600;
+      font-size: 1.35em;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:active {
+      opacity: 0.6;
+    }
+
+    /* Add styles for the sign-up form */
+    #signupForm {
+      display: none;
+    }
+
+    /* Add transition for smooth form switching */
+    .form {
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    /* Media queries for responsive design */
+    @media (max-width: 900px) {
+      section span {
+        width: calc(10vw - 2px);
+        height: calc(10vw - 2px);
+      }
+    }
+
+    @media (max-width: 600px) {
+      section span {
+        width: calc(20vw - 2px);
+        height: calc(20vw - 2px);
+      }
+    }
+
+    @media (max-width: 400px) {
+      .signin {
+        padding: 30px 20px;
+      }
+    }
+    </style>
 </head>
 <body>
-<!-- partial:index.partial.html -->
-<section>
+    <section>
+      <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+        <div class="signin">
+            <div class="content">
+                <h2 id="formTitle">Login</h2>
+                
+                <!-- Login Form -->
+                <form action="login.php" method="POST" class="form" id="loginForm">
+                    <div class="inputBox">
+                        <input type="text" name="username" required>
+                        <i>Username</i>
+                    </div>
+                    <div class="inputBox">
+                        <input type="password" name="password" required>
+                        <i>Password</i>
+                    </div>
+                    <div class="links">
+                        <a href="#">Forgot Password</a>
+                        <a href="#" id="showSignUp">Sign up</a>
+                    </div>
+                    <div class="inputBox">
+                        <input type="submit" value="Login">
+                    </div>
+                </form>
 
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-
-
- 
-
-
-
-    <div class="signin">
-      <div class="content">
-        <h2>Sign In</h2>
-        <div class="form">
-          <div class="inputBox">
-            <input type="text" required>
-            <i>Username</i>
-          </div>
-          <div class="inputBox">
-            <input type="password" required>
-            <i>Password</i>
-          </div>
-          <div class="links">
-            <a href="#">Forgot Password</a>
-            <a href="#">Signup</a>
-          </div>
-          <div class="inputBox">
-            <input type="submit" value="Login">
-          </div>
+                <!-- Signup Form -->
+                <form action="register.php" method="POST" class="form" id="signupForm" style="display: none;">
+                    <div class="inputBox">
+                        <input type="text" name="name" required minlength="3" maxlength="50">
+                        <i>Name</i>
+                    </div>
+                    <div class="inputBox">
+                        <input type="email" name="email" required>
+                        <i>Email</i>
+                    </div>
+                    <div class="inputBox">
+                        <input type="password" name="password" required minlength="8" id="password">
+                        <i>Password</i>
+                    </div>
+                    <div class="inputBox">
+                        <input type="password" name="confirm_password" required minlength="8" id="confirm_password">
+                        <i>Confirm Password</i>
+                    </div>
+                    <div class="links">
+                        <a href="#" id="showLogin">Back to Login</a>
+                    </div>
+                    <div class="inputBox">
+                        <input type="submit" value="Sign Up">
+                    </div>
+                </form>
+            </div>
         </div>
-      </div>
-    </div>
-  </section>
-<!-- partial -->
-  
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            const formTitle = document.getElementById('formTitle');
+            const showSignUp = document.getElementById('showSignUp');
+            const showLogin = document.getElementById('showLogin');
+
+            // Form switching
+            showSignUp.addEventListener('click', function(e) {
+                e.preventDefault();
+                loginForm.style.display = 'none';
+                signupForm.style.display = 'block';
+                formTitle.textContent = 'Sign Up';
+            });
+
+            showLogin.addEventListener('click', function(e) {
+                e.preventDefault();
+                signupForm.style.display = 'none';
+                loginForm.style.display = 'block';
+                formTitle.textContent = 'Login';
+            });
+
+            // Password confirmation validation
+            signupForm.addEventListener('submit', function(e) {
+                const password = document.getElementById('password');
+                const confirm_password = document.getElementById('confirm_password');
+                
+                if (password.value !== confirm_password.value) {
+                    e.preventDefault();
+                    alert('Passwords do not match!');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
