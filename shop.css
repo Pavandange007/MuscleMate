@@ -1,4 +1,4 @@
-.u-section-1 {
+ .u-section-1 {
   background-image: linear-gradient(to right, #53a3ea, #519245);
 }
 
@@ -121,13 +121,40 @@
   padding: 8px 33px;
 }
 
-.u-section-1 .u-btn-4 {
+..u-section-1 .u-btn-4 {
   --radius: 6px;
   font-weight: 700;
   font-size: 0.9375rem;
   background-image: none;
   margin: 30px 0 60px auto;
   padding: 8px 33px;
+}
+
+.u-section-1 .u-btn-new {
+  --radius: 8px;
+  font-weight: 700;
+  font-size: 1rem;
+  background-color: #ff5722; /* New background color */
+  color: white; /* Text color */
+  padding: 10px 40px; /* Padding for the button */
+  transition: background-color 0.3s ease; /* Transition effect */
+}
+
+.u-section-1 .u-btn-new:hover {
+  background-color: #e64a19; /* Darker shade on hover */
+}
+
+.u-section-1 .u-text-new {
+  font-weight: 500;
+  font-size: 1.125rem; /* Slightly larger font size */
+  color: #333; /* Text color */
+  margin: 20px 0; /* Margin around the text */
+}
+#cartButton {
+  position: fixed;
+  bottom: 20px; /* Distance from the bottom */
+  left: 20px;  /* Distance from the right */
+  z-index: 50;  /* Ensure it stays above other elements */
 }
 
 @media (max-width: 1199px) {
@@ -343,5 +370,4 @@
     margin-right: 46px;
   }
 }
-
 
