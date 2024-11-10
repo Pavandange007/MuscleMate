@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout Plan Selector</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            min-height: 100vh;
+            padding: 2rem;
+            color: #1b5e20;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeDown 0.8s ease-out;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        h1 {
+            color: #1b5e20;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            color: #2e7d32;
+            font-size: 1.3rem;
+            font-weight: 500;
+        }
+
+        .plans-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            padding: 1rem;
+        }
+
+        .plan-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            transition: all 0.3s ease;
+            animation: fadeIn 0.8s ease-out;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .plan-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #43a047, #66bb6a);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+            transform-origin: left;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 48px rgba(31, 38, 135, 0.15);
+        }
+
+        .plan-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .plan-card h2 {
+            color: #1b5e20;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .plan-card h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: #43a047;
+            border-radius: 2px;
+        }
+
+        .plan-card p {
+            color: #388e3c;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .plan-content {
+            display: none;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #e8f5e9;
+        }
+
+        .plan-content.active {
+            display: block;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        .day {
+            margin: 0.8rem 0;
+            padding: 1rem;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-radius: 10px;
+            color: #1b5e20;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            border: 1px solid #a5d6a7;
+        }
+
+        .day:hover {
+            transform: translateX(5px);
+            background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%);
+        }
+
+        .view-exercises {
+            background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .view-exercises:hover {
+            background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* New decorative elements */
+        .decoration {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(165, 214, 167, 0.2) 0%, rgba(165, 214, 167, 0) 70%);
+            z-index: -1;
+        }
+
+        .decoration-1 {
+            top: -150px;
+            right: -150px;
+        }
+
+        .decoration-2 {
+            bottom: -150px;
+            left: -150px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Decorative elements -->
+    <div class="decoration decoration-1"></div>
+    <div class="decoration decoration-2"></div>
+
+    <div class="container">
+        <header>
+            <h1>Workout Plan Selector</h1>
+            <p class="subtitle">Transform Your Body with the Perfect Training Split</p>
+        </header>
+
+        <div class="plans-container">
+            <div class="plan-card" onclick="togglePlan('ppl')">
+                <h2>Push Pull Legs (PPL)</h2>
+                <p>6 days per week split focusing on pushing, pulling, and leg movements for maximum muscle growth</p>
+                <div class="plan-content" id="ppl">
+                    <div class="day">
+                        Day 1: Push (Chest, Shoulders, Triceps)
+                        <a href="workout-videos.html" class="view-exercises" onclick="event.stopPropagation()">View Exercises</a>
+                    </div>
+                    <div class="day">
+                        Day 2: Pull (Back, Biceps)
+                        <a href="workout-videos.html" class="view-exercises" onclick="event.stopPropagation()">View Exercises</a>
+                    </div>
+                    <div class="day">
+                        Day 3: Legs
+                        <a href="workout-videos.html" class="view-exercises" onclick="event.stopPropagation()">View Exercises</a>
+                    </div>
+                    <div class="day">
+                        Day 4: Push
+                        <a href="workout-videos.html" class="view-exercises" onclick="event.stopPropagation()">View Exercises</a>
+                    </div>
+                    <div class="day">
+                        Day 5: Pull
+                        <a href="workout-videos.html" class="view-exercises" onclick="event.stopPropagation()">View Exercises</a>
+                    </div>
+                    <div class="day">
+                        Day 6: Legs
+                        <a href="workout-videos.html" class="view-exercises" onclick="event.stopPropagation()">View Exercises</a>
+                    </div>
+                    <div class="day">Day 7: Rest & Recovery</div>
+                </div>
+            </div>
+
+            <div class="plan-card" onclick="togglePlan('bro')">
+                <h2>Bro Split</h2>
+                <p>Train one muscle group per day for maximum intensity and recovery</p>
+                <div class="plan-content" id="bro">
+                    <div class="day">
+                        Day 1: Chest
+                        <a href="workout-videos.html" class="view-exercises" onclick="event.stopPropagation()">View Exercises</a>
+                    </div>
+                    <div class="day">
+                        Day 2: Back
+                        <a href="workout-videos.html" class="view-exercises" onclick="event.stopPropagation()">View Exercises</a>
+                    </div>
+                    <div class="day">
+                        Day 3: Shoulders
+                        <a href="workout-videos.html" class="view-exercises" onclick="event.stopPropagation()">View Exercises</a>
+                    </div>
+                    <div class="day">
+                        Day 4: Arms
+                        <a href="workout-videos.html" class="view-exercises" onclick="event.stopPropagation()">View Exercises</a>
+                    </div>
+                    <div class="day">
+                        Day 5: Legs
+                        <a href="workout-videos.html" class="view-exercises" onclick="event.stopPropagation()">View Exercises</a>
+                    </div>
+                    <div class="day">
+                        Day 6: Core & Cardio
+                        <a href="workout-videos.html" class="view-exercises" onclick="event.stopPropagation()">View Exercises</a>
+                    </div>
+                    <div class="day">Day 7: Rest & Recovery</div>
+                </div>
+            </div>
+
+            <div class="plan-card" onclick="togglePlan('upper-lower')">
+                <h2>Upper/Lower Split</h2>
+                <p>Alternate between upper and lower body workouts for balanced development</p>
+                <div class="plan-content" id="upper-lower">
+                    <div class="day">
+                        Day 1: Upper Body
+                        <a href="workout-videos.html" class="view-exercises" onclick="event.stopPropagation()">View Exercises</a>
+                    </div>
+                    <div class="day">
+                        Day 2: Lower Body
+                        <a href="workout-videos.html" class="view-exercises" onclick="event.stopPropagation()">View Exercises</a>
+                    </div>
+                    <div class="day">
+                        Day 3: Upper Body
+                        <a href="workout-videos.html" class="view-exercises" onclick="event.stopPropagation()">View Exercises</a>
+                    </div>
+                    <div class="day">
+                        Day 4: Lower Body
+                        <a href="workout-videos.html" class="view-exercises" onclick="event.stopPropagation()">View Exercises</a>
+                    </div>
+                    <div class="day">
+                        Day 5: Upper Body
+                        <a href="workout-videos.html" class="view-exercises" onclick="event.stopPropagation()">View Exercises</a>
+                    </div>
+                    <div class="day">
+                        Day 6: Lower Body
+                        <a href="workout-videos.html" class="view-exercises" onclick="event.stopPropagation()">View Exercises</a>
+                    </div>
+                    <div class="day">Day 7: Rest & Recovery</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function togglePlan(planId) {
+            const planContent = document.getElementById(planId);
+            const allPlans = document.querySelectorAll('.plan-content');
+            
+            allPlans.forEach(plan => {
+                if (plan.id !== planId) {
+                    plan.classList.remove('active');
+                }
+            });
+            
+            planContent.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
