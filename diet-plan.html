@@ -1,109 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Personalized Diet Plan</title>
-    <link rel="stylesheet" href="diet-plan.css">
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Your Personalized Diet Plan</title>
+   <link rel="stylesheet" href="diet-plan.css">
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Your Personalized Diet Plan</h1>
-            <p>Based on your BMI calculation</p>
-        </div>
+   <div class="container">
+      <div class="header">
+        <h1>Your Personalized Diet Plan</h1>
+        <p>Based on your BMI calculation (CAN EAT AS PER YOUR NEED)</p>
+      </div>
 
-        <div class="bmi-info">
-            <h2>Your BMI Status</h2>
-            <p id="bmi-status">Loading...</p>
-            <p id="bmi-recommendation">Customizing your diet plan...</p>
-        </div>
+      <div class="bmi-info">
+        <h2>Your BMI Status</h2>
+        <p id="bmi-status">Loading...</p>
+        <p id="bmi-recommendation">Customizing your diet plan...</p>
+      </div>
 
-        <div class="diet-grid">
-            <!-- Cards will be dynamically added here -->
-        </div>
+      <div class="diet-grid">
+        <!-- Cards will be dynamically added here -->
+      </div>
 
-        <button class="back-btn" onclick="window.location.href='bmi.html'">
-            Return to Calculator
-        </button>
-    </div>
+      <button class="back-btn" onclick="window.location.href='bmi.html'">
+        Return to Calculator
+      </button>
+   </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Get BMI from URL parameters
-            const urlParams = new URLSearchParams(window.location.search);
-            const bmi = parseFloat(urlParams.get('bmi'));
+   <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Get BMI from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const bmi = parseFloat(urlParams.get('bmi'));
 
-            // Update BMI status
-            const bmiStatus = document.getElementById('bmi-status');
-            const bmiRecommendation = document.getElementById('bmi-recommendation');
-            
-            let category = '';
-            let recommendations = [];
+        // Update BMI status
+        const bmiStatus = document.getElementById('bmi-status');
+        const bmiRecommendation = document.getElementById('bmi-recommendation');
 
-            if (bmi < 18.5) {
-                category = 'Underweight';
-                recommendations = [
-                    { title: 'Breakfast', meals: ['Protein-rich smoothie', 'Oatmeal with nuts', 'Whole grain toast with avocado'] },
-                    { title: 'Lunch', meals: ['Quinoa bowl with chickpeas', 'Grilled chicken sandwich', 'Rice with curry'] },
-                    { title: 'Dinner', meals: ['Pasta with meat sauce', 'Salmon with potatoes', 'Stir-fried noodles'] },
-                    { title: 'Snacks', meals: ['Mixed nuts', 'Protein bars', 'Fruit with peanut butter'] }
-                ];
-            } else if (bmi < 25) {
-                category = 'Normal Weight';
-                recommendations = [
-                    { title: 'Breakfast', meals: ['Greek yogurt with berries', 'Vegetable omelet', 'Whole grain cereal'] },
-                    { title: 'Lunch', meals: ['Mixed salad with protein', 'Turkey wrap', 'Vegetable soup'] },
-                    { title: 'Dinner', meals: ['Grilled fish with vegetables', 'Chicken breast with quinoa', 'Tofu stir-fry'] },
-                    { title: 'Snacks', meals: ['Apple slices', 'Carrot sticks', 'Handful of almonds'] }
-                ];
-            } else if (bmi < 30) {
-                category = 'Overweight';
-                recommendations = [
-                    { title: 'Breakfast', meals: ['Egg white omelet', 'Steel-cut oats', 'Low-fat yogurt parfait'] },
-                    { title: 'Lunch', meals: ['Grilled chicken salad', 'Tuna wrap', 'Lentil soup'] },
-                    { title: 'Dinner', meals: ['Baked fish', 'Turkey breast', 'Vegetable curry'] },
-                    { title: 'Snacks', meals: ['Celery with hummus', 'Rice cakes', 'Green smoothie'] }
-                ];
-            } else {
-                category = 'Obese';
-                recommendations = [
-                    { title: 'Breakfast', meals: ['Protein smoothie', 'Whole grain toast', 'Fruit bowl'] },
-                    { title: 'Lunch', meals: ['Leafy green salad', 'Vegetable soup', 'Grilled chicken'] },
-                    { title: 'Dinner', meals: ['Steamed fish', 'Roasted vegetables', 'Quinoa bowl'] },
-                    { title: 'Snacks', meals: ['Cherry tomatoes', 'Cucumber slices', 'Herbal tea'] }
-                ];
-            }
+        let category = '';
+        let recommendations = [];
 
-            bmiStatus.textContent = `Your BMI is ${bmi.toFixed(1)} (${category})`;
-            bmiRecommendation.textContent = `Here's a customized meal plan to help you maintain a healthy lifestyle.`;
+        // Define recommendations based on BMI categories
+        if (bmi < 18.5) {
+           category = 'Underweight';
+           recommendations = [
+              {
+                title: 'Breakfast',
+                meals: [
+                   { name: 'Oatmeal with peanut butter and bananna', nutrients: 'Calories: 350 | Protein: 20g | Carbs: 45g | Fat: 12g', youtubeLink: 'https://www.youtube.com/watch?v=Hb31xBWhbb8' },
+                   { name: 'Smoothie with Spinach, Banana, and Protein Powder', nutrients: 'Calories: 380 | Protein: 12g | Carbs: 58g | Fat: 16g', youtubeLink: 'https://www.youtube.com/watch?v=Ol-l6PiIVqk' },
+                   { name: 'Veg sandwitch', nutrients: 'Calories: 320 | Protein: 10g | Carbs: 35g | Fat: 18g', youtubeLink: 'https://www.youtube.com/watch?v=BlzJzavriHw' }
+                ]
+              },
+              {
+                title: 'Lunch',
+                meals: [
+                   { name: 'Chickpea Curry (Chana Masala) with Brown Rices', nutrients: 'Calories: 450 | Protein: 18g | Carbs: 65g | Fat: 14g', youtubeLink: 'https://www.youtube.com/results?search_query=Chickpea+Curry+(Chana+Masala)+with+Brown+Rice' },
+                   { name: 'Grilled chicken sandwich', nutrients: 'Calories: 420 | Protein: 28g | Carbs: 48g | Fat: 16g', youtubeLink: 'https://www.youtube.com/watch?v=XxlitHO0v18' },
+                   { name: 'Palak Paneer with Whole Wheat Roti', nutrients: 'Calories: 480 | Protein: 16g | Carbs: 72g | Fat: 18g', youtubeLink: 'https://www.youtube.com/watch?v=cRsAQeR5dbI' }
+                ]
+              },
+              {
+                title: 'Evening Snack',
+                meals: [
+                   { name: 'Fruit Chaat', nutrients: 'Calories: 180 | Protein: 6g | Carbs: 8g | Fat: 16g', youtubeLink: 'https://www.youtube.com/watch?v=OWR4iJR6FHM' },
+                   { name: 'Protein bars', nutrients: 'Calories: 220 | Protein: 15g | Carbs: 25g | Fat: 8g', youtubeLink: 'https://www.youtube.com/watch?v=NHXeKJ3wf-8' },
+                   { name: 'Masala Peanuts', nutrients: 'Calories: 250 | Protein: 8g | Carbs: 28g | Fat: 14g', youtubeLink: 'https://www.youtube.com/watch?v=dZZmBm4QQAU' }
+                ]
+              },
+              {
+                title: 'Dinner',
+                meals: [
+                   { name: 'Paneer Tikka with Mixed Vegetables', nutrients: 'Calories: 520 | Protein: 25g | Carbs: 68g | Fat: 20g', youtubeLink: 'https://www.youtube.com/watch?v=lWdQZ2govHs' },
+                   { name: 'Dal Makhani with Jeera Rice', nutrients: 'Calories: 490 | Protein: 32g | Carbs: 45g | Fat: 24g', youtubeLink: 'https://www.youtube.com/watch?v=9toRO2nrmKc' },
+                   { name: 'Stir-fried noodles', nutrients: 'Calories: 460 | Protein: 18g | Carbs: 64g | Fat: 16g', youtubeLink: 'https://www.youtube.com/watch?v=Ds-3VyRIyCU' }
+                ]
+              }
+           ];
+        } else if (bmi < 25) {
+           category = 'Normal Weight';
+           recommendations = [
+              {
+                title: 'Breakfast',
+                meals: [
+                   { name: 'Greek yogurt with berries', nutrients: 'Calories: 280 | Protein: 15g | Carbs: 35g | Fat: 10g', youtubeLink: 'https://www.youtube.com/watch?v=X7Y8wVRtkg4' },
+                   { name: 'Vegetable omelet', nutrients: 'Calories: 310 | Protein: 18g | Carbs: 28g | Fat: 14g', youtubeLink: 'https://www.youtube.com/watch?v=mno901' },
+                   { name: 'Poha', nutrients: 'Calories: 290 | Protein: 8g | Carbs: 45g | Fat: 8g', youtubeLink: 'https://www.youtube.com/watch?v=2_BkfGRcx3o' }
+                ]
+              },
+              {
+                title: 'Lunch',
+                meals: [
+                   { name: 'Mixed salad with protein', nutrients: 'Calories: 350 | Protein: 25g | Carbs: 30g | Fat: 12g', youtubeLink: 'https://www.youtube.com/watch?v=nzNQ5lTmg1Q' },
+                   { name: 'Mixed Vegetable Curry with Brown Rice', nutrients: 'Calories: 380 | Protein: 22g | Carbs: 42g | Fat: 14g', youtubeLink: 'https://www.youtube.com/watch?v=XV6QDRd7zEo' },
+                   { name: 'Roti with Baingan Bharta (Mashed Eggplant)', nutrients: 'Calories: 280 | Protein: 12g | Carbs: 38g | Fat: 8g', youtubeLink: 'https://www.youtube.com/watch?v=U-Km4u20cI8' }
+                ]
+              },
+              {
+                title: 'Evening Snack',
+                meals: [
+                   { name: 'Carrot sticks with hummus', nutrients: 'Calories: 100 | Protein: 5g | Carbs: 10g | Fat: 10g', youtubeLink: 'https://www.youtube.com/watch?v=mxcjHYjvn1Y' },
+                   { name: 'Baked Masala Chickpeas', nutrients: 'Calories: 150 | Protein: 20g | Carbs: 5g | Fat: 0g', youtubeLink: 'https://www.youtube.com/watch?v=bjnbD_TR95o' },
+                   { name: 'Fruit Salad with Yogurt', nutrients: 'Calories: 220 | Protein: 15g | Carbs: 25g | Fat: 8g', youtubeLink: 'https://www.youtube.com/watch?v=wp_xdkIG6_E' }
+                ]
+              },
+              {
+                title: 'Dinner',
+                meals: [
+                   { name: 'Grilled chicken with roasted vegetables', nutrients: 'Calories: 400 | Protein: 35g | Carbs: 20g | Fat: 10g', youtubeLink: 'https://www.youtube.com/watch?v=eLyRsKt5GwM' },
+                   { name: 'Lentil soup with whole grain bread', nutrients: 'Calories: 450 | Protein: 20g | Carbs: 60g | Fat: 10g', youtubeLink: 'https://www.youtube.com/watch?v=hfL7CPhku2I' },
+                   { name: 'Paneer Butter Masala with Whole Wheat Naan', nutrients: 'Calories: 420 | Protein: 35g | Carbs: 30g | Fat: 14g', youtubeLink: 'https://www.youtube.com/watch?v=rkMzLvcy-JY' }
+                ]
+              }
+           ];
+        } else if (bmi < 30) {
+           category = 'Overweight';
+           recommendations = [
+              {
+                title: 'Breakfast',
+                meals: [
+                   { name: 'Egg white omelet', nutrients: 'Calories: 220 | Protein: 18g | Carbs: 15g | Fat: 8g', youtubeLink: 'https://www.youtube.com/watch?v=stu234' },
+                   { name: 'Steel-cut oats', nutrients: 'Calories: 260 | Protein: 10g | Carbs: 42g | Fat: 6g', youtubeLink: 'https://www.youtube.com/watch?v=vwx678' },
+                   { name: 'Low-fat yogurt parfait', nutrients: 'Calories: 240 | Protein: 14g | Carbs: 38g | Fat: 5g', youtubeLink: 'https://www.youtube.com/watch?v=yz901' }
+                ]
+              },
+              {
+                title: 'Lunch',
+                meals: [
+                   { name: 'Grilled chicken breast with quinoa', nutrients: 'Calories: 400 | Protein: 35g | Carbs: 30g | Fat: 10g', youtubeLink: 'https://www.youtube.com/watch?v=abc234' },
+                   { name: 'Tuna salad sandwich', nutrients: 'Calories: 420 | Protein: 30g | Carbs: 40g | Fat: 14g', youtubeLink: 'https://www.youtube.com/watch?v=def678' },
+                   { name: 'Vegetable soup', nutrients: 'Calories: 280 | Protein: 12g | Carbs: 38g | Fat: 8g', youtubeLink: 'https://www.youtube.com/watch?v=ghi901' }
+                ]
+              },
+              {
+                title: 'Evening Snack',
+                meals: [
+                   { name: 'Carrot sticks with hummus', nutrients: 'Calories: 100 | Protein: 5g | Carbs: 10g | Fat: 10g', youtubeLink: 'https://www.youtube.com/watch?v=jkl234' },
+                   { name: 'Cottage cheese with fruit', nutrients: 'Calories: 150 | Protein: 20g | Carbs: 5g | Fat: 0g', youtubeLink: 'https://www.youtube.com/watch?v=mno678' },
+                   { name: 'Protein bar', nutrients: 'Calories: 220 | Protein: 15g | Carbs: 25g | Fat: 8g', youtubeLink: 'https://www.youtube.com/watch?v=pqr901' }
+                ]
+              },
+              {
+                title: 'Dinner',
+                meals: [
+                   { name: 'Grilled chicken with roasted vegetables', nutrients: 'Calories: 400 | Protein: 35g | Carbs: 20g | Fat: 10g', youtubeLink: 'https://www.youtube.com/watch?v=stu234' },
+                   { name: 'Lentil soup with whole grain bread', nutrients: 'Calories: 450 | Protein: 20g | Carbs: 60g | Fat: 10g', youtubeLink: 'https://www.youtube.com/watch?v=vwx678' },
+                   { name: 'Baked salmon with quinoa', nutrients: 'Calories: 420 | Protein: 35g | Carbs: 30g | Fat: 14g', youtubeLink: 'https://www.youtube.com/watch?v=yz901' }
+                ]
+              }
+           ];
+        } else {
+           category = 'Obese';
+           recommendations = [
+              {
+                title: 'Breakfast',
+                meals: [
+                   { name: 'Protein smoothie', nutrients: 'Calories: 180 | Protein: 20g | Carbs: 25g | Fat: 4g', youtubeLink: 'https://www.youtube.com/watch?v=abc234' },
+                   { name: 'Whole grain toast', nutrients: 'Calories: 160 | Protein: 8g | Carbs: 28g | Fat: 3g', youtubeLink: 'https://www.youtube.com/watch?v=def678' },
+                   { name: 'Fruit bowl', nutrients: 'Calories: 140 | Protein: 2g | Carbs: 32g | Fat: 0g', youtubeLink: 'https://www.youtube.com/watch?v=ghi901' }
+                ]
+              },
+              {
+                title: 'Lunch',
+                meals: [
+                   { name: 'Grilled chicken breast with quinoa', nutrients: 'Calories: 400 | Protein: 35g | Carbs: 30g | Fat: 10g', youtubeLink: 'https://www.youtube.com/watch?v=abc234' },
+                   { name: 'Tuna salad sandwich', nutrients: 'Calories: 420 | Protein: 30g | Carbs: 40g | Fat: 14g', youtubeLink: 'https://www.youtube.com/watch?v=def678' },
+                   { name: 'Vegetable soup', nutrients: 'Calories: 280 | Protein: 12g | Carbs: 38g | Fat: 8g', youtubeLink: 'https://www.youtube.com/watch?v=ghi901' }
+                ]
+              },
+              {
+                title: 'Evening Snack',
+                meals: [
+                { name: 'Carrot sticks with hummus', nutrients: 'Calories: 100 | Protein: 5g | Carbs: 10g | Fat: 10g', youtubeLink: 'https://www.youtube.com/watch?v=jkl234' },
+                   { name: 'Cottage cheese with fruit', nutrients: 'Calories: 150 | Protein: 20g | Carbs: 5g | Fat: 0g', youtubeLink: 'https://www.youtube.com/watch?v=mno678' },
+                   { name: 'Protein bar', nutrients: 'Calories: 220 | Protein: 15g | Carbs: 25g | Fat: 8g', youtubeLink: 'https://www.youtube.com/watch?v=pqr901' }
+                ]
+              },
+              {
+                title: 'Dinner',
+                meals: [
+                   { name: 'Grilled chicken with roasted vegetables', nutrients: 'Calories: 400 | Protein: 35g | Carbs: 20g | Fat: 10g', youtubeLink: 'https://www.youtube.com/watch?v=stu234' },
+                   { name: 'Lentil soup with whole grain bread', nutrients: 'Calories: 450 | Protein: 20g | Carbs: 60g | Fat: 10g', youtubeLink: 'https://www.youtube.com/watch?v=vwx678' },
+                   { name: 'Baked salmon with quinoa', nutrients: 'Calories: 420 | Protein: 35g | Carbs: 30g | Fat: 14g', youtubeLink: 'https://www.youtube.com/watch?v=yz901' }
+                ]
+              }
+           ];
+        }
 
-            // Create diet cards with dropdown for meal recipes
-            const dietGrid = document.querySelector('.diet-grid');
-            recommendations.forEach((rec, index) => {
-                const card = document.createElement('div');
-                card.className = 'diet-card';
-                card.style.animationDelay = `${0.4 + (index * 0.2)}s`;
+        // Set the BMI status and recommendations
+        bmiStatus.textContent = `Your BMI is ${bmi.toFixed(1)} (${category})`;
+        bmiRecommendation.textContent = `Here's a customized meal plan to help you maintain a healthy lifestyle.`;
 
-                // Creating dropdown for meals
-                card.innerHTML = `
-                    <h3>${rec.title}</h3>
-                    <ul class="meal-list">
-                        ${rec.meals.map(meal => `
-                            <li>
-                                <span class="meal-icon">●</span>
-                                <details>
-                                    <summary>${meal}</summary>
-                                    <p>Recipe for ${meal}</p> <!-- Replace with actual recipes -->
-                                </details>
-                            </li>
-                        `).join('')}
-                    </ul>
-                `;
+        // Create diet cards with dropdown for meal nutrients and YouTube links
+        const dietGrid = document.querySelector('.diet-grid');
+        recommendations.forEach((rec, index) => {
+            const card = document.createElement('div');
+            card.className = 'diet-card';
+            card.style.animationDelay = `${0.4 + (index * 0.2)}s`;
 
-                dietGrid.appendChild(card);
-            });
+            // Creating dropdown for meals with YouTube links
+            card.innerHTML = `
+                <h3>${rec.title}</h3>
+                <ul class="meal-list">
+                    ${rec.meals.map(meal => `
+                        <li data-youtube-link="${meal.youtubeLink}">
+                            <span class="meal-icon">●</span>
+                            <details>
+                                <summary>${meal.name}</summary>
+                                <p class="nutrient-info">${meal.nutrients}</p>
+                                <p>
+                                    Watch the recipe on
+                                    <a href="#" onclick="openYouTubeLink(this)">YouTube</a>
+                                </p>
+                            </details>
+                        </li>
+                    `).join('')}
+                </ul>
+            `;
+
+            dietGrid.appendChild(card);
         });
-    </script>
+    });
+
+    function openYouTubeLink(element) {
+        const youtubeLink = element.closest('li').getAttribute('data-youtube-link');
+        window.open(youtubeLink, '_blank');
+    }
+   </script>
 </body>
 </html>
