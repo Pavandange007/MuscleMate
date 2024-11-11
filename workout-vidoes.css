@@ -713,3 +713,27 @@
     width: 340px;
   }
 }
+/* Your existing styles... */
+
+/* Add the button styles */
+.button-container {
+  text-align: center;
+  padding: 20px 0;
+  margin: 20px 0;
+}
+
+.workout-plans-button {
+  display: inline-block;
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px 30px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 18px;
+  transition: background-color 0.3s ease;
+}
+
+.workout-plans-button:hover {
+  background-color: #45a049;
+}
