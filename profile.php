@@ -141,61 +141,6 @@ $conn->close();
             border-color: var(--cyan);
         }
 
-        .custom-select {
-            position: relative;
-            width: 100%;
-        }
-
-        .select-selected {
-            background: var(--dark-grey);
-            padding: 12px;
-            border: 1px solid var(--light-grey);
-            border-radius: 8px;
-            color: var(--text-primary);
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .select-selected:hover {
-            border-color: var(--cyan);
-        }
-
-        .select-selected:after {
-            content: '▼';
-            font-size: 12px;
-            color: var(--cyan);
-        }
-
-        .select-items {
-            position: absolute;
-            background: var(--medium-grey);
-            top: 100%;
-            left: 0;
-            right: 0;
-            z-index: 99;
-            margin-top: 5px;
-            border-radius: 8px;
-            border: 1px solid var(--light-grey);
-            display: none;
-        }
-
-        .select-items div {
-            padding: 12px;
-            cursor: pointer;
-            color: var(--text-primary);
-        }
-
-        .select-items div:hover {
-            background: var(--light-grey);
-            color: var(--cyan);
-        }
-
-        .select-show {
-            display: block;
-        }
-
         .stats-item {
             display: flex;
             align-items: center;
@@ -212,6 +157,29 @@ $conn->close();
             border-radius: 10px;
             font-size: 20px;
             background: var(--dark-grey);
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            background: var(--dark-grey);
+            border: 1px solid var(--light-grey);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300BCD4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--cyan);
         }
 
         .monthly-challenge {
@@ -333,7 +301,7 @@ $conn->close();
 </head>
 <body>
     <div class="container">
-        <h1 class="welcome">Welcome, <?php echo $_SESSION['username'] ?>!</h1>
+        <h1 class="welcome">Welcome!</h1>
         
         <div class="dashboard">
             <div class="card">
@@ -361,50 +329,41 @@ $conn->close();
                 <div class="stats-item">
                     <div class="icon">💪</div>
                     <div class="form-group">
-                        <label>Last Workout</label>
-                        <div class="custom-select" data-value="fullBody">
-                            <div class="select-selected">Full Body Workout</div>
-                            <div class="select-items">
-                                <div data-value="fullBody">Full Body Workout</div>
-                                <div data-value="upperBody">Upper Body</div>
-                                <div data-value="lowerBody">Lower Body</div>
-                                <div data-value="cardio">Cardio</div>
-                                <div data-value="hiit">HIIT</div>
-                            </div>
-                        </div>
+                        <label for="lastWorkout">Last Workout</label>
+                        <select id="lastWorkout">
+                            <option value="fullBody">Full Body Workout</option>
+                            <option value="upperBody">Upper Body</option>
+                            <option value="lowerBody">Lower Body</option>
+                            <option value="cardio">Cardio</option>
+                            <option value="hiit">HIIT</option>
+                        </select>
                     </div>
                 </div>
 
                 <div class="stats-item">
                     <div class="icon">🎯</div>
                     <div class="form-group">
-                        <label>Current Goal</label>
-                        <div class="custom-select" data-value="weightLoss">
-                            <div class="select-selected">Weight Loss</div>
-                            <div class="select-items">
-                                <div data-value="weightLoss">Weight Loss</div>
-                                <div data-value="muscleGain">Muscle Gain</div>
-                                <div data-value="endurance">Endurance</div>
-                                <div data-value="strength">Strength</div>
-                            </div>
-                        </div>
+                        <label for="currentGoal">Current Goal</label>
+                        <select id="currentGoal">
+                            <option value="weightLoss">Weight Loss</option>
+                            <option value="muscleGain">Muscle Gain</option>
+                            <option value="endurance">Endurance</option>
+                            <option value="strength">Strength</option>
+                        </select>
                     </div>
                 </div>
 
                 <div class="stats-item">
                     <div class="icon">📅</div>
                     <div class="form-group">
-                        <label>Next Workout</label>
-                        <div class="custom-select" data-value="upperBody">
-                            <div class="select-selected">Upper Body</div>
-                            <div class="select-items">
-                                <div data-value="upperBody">Upper Body</div>
-                                <div data-value="lowerBody">Lower Body</div>
-                                <div data-value="fullBody">Full Body Workout</div>
-                                <div data-value="cardio">Cardio</div>
-                                <div data-value="hiit">HIIT</div>
-                            </div>
-                        </div>
+                        <label for="nextWorkout">Next Workout</label>
+                        <select id="nextWorkout">
+                            <option value="upperBody">Upper Body</option>
+                            <option value="lowerBody">Lower Body</option>
+                            <option value="fullBody">Full Body Workout</option>
+                            <option value="cardio">Cardio</option>
+                            <option value="hiit">HIIT</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -435,13 +394,28 @@ $conn->close();
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Save select values to localStorage
+            const selects = document.querySelectorAll('select');
+            selects.forEach(select => {
+                // Load saved value if exists
+                const savedValue = localStorage.getItem(select.id);
+                if (savedValue) {
+                    select.value = savedValue;
+                }
+
+                // Save on change
+                select.addEventListener('change', function() {
+                    localStorage.setItem(this.id, this.value);
+                });
+            });
+
             // Initialize pushup challenge elements
             const challengeProgress = document.querySelector('.challenge-progress strong');
             const completeButton = document.querySelector('.mark-complete');
             const resetButton = document.querySelector('.reset-button');
             const cooldownSpan = document.querySelector('.cooldown-timer');
 
-            // Initialize progress from localStorage, starting from 0
+            // Initialize progress from localStorage
             let pushupProgress = parseInt(localStorage.getItem('pushupProgress')) || 0;
             let lastPushupDate = localStorage.getItem('lastPushupDate') || null;
 
@@ -498,7 +472,9 @@ $conn->close();
             completeButton.addEventListener('click', function() {
                 if (!canComplete()) return;
 
-                pushupProgress = Math.min(pushupProgress + 1, 30);
+                pushupProgress++;
+                if (pushupProgress > 30) pushupProgress = 30;
+                
                 lastPushupDate = new Date().toISOString();
 
                 localStorage.setItem('pushupProgress', pushupProgress);
@@ -517,4 +493,12 @@ $conn->close();
             resetButton.addEventListener('click', function() {
                 pushupProgress = 0;
                 lastPushupDate = null;
-                localStorage.setItem('pushup
+                localStorage.removeItem('pushupProgress');
+                localStorage.removeItem('lastPushupDate');
+                challengeProgress.textContent = '0/30 days';
+                updateCooldownDisplay();
+            });
+        });
+    </script>
+</body>
+</html>
