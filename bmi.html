@@ -4,57 +4,248 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BMI Calculator</title>
-    <link rel="stylesheet" href="bmi.css">
+    <style>
+        body {
+            width: 100%;
+            height: 100%;
+            --s: 200px;
+            --c1: #1d1d1d;
+            --c2: #4e4f51;
+            --c3: #3c3c3c;
+            background: repeating-conic-gradient(
+                    from 30deg,
+                    #0000 0 120deg,
+                    var(--c3) 0 180deg
+                )
+                calc(0.5 * var(--s)) calc(0.5 * var(--s) * 0.577),
+                repeating-conic-gradient(
+                    from 30deg,
+                    var(--c1) 0 60deg,
+                    var(--c2) 0 120deg,
+                    var(--c3) 0 180deg
+                );
+            background-size: var(--s) calc(var(--s) * 0.577);
+            color: #f9f9f9;
+            font-family: "Calibri", sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            padding: 20px;
+            background-color: #151515;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+            z-index: 1;
+            position: relative;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 28px;
+            background-image: linear-gradient(to right, #541bbe, #0b9d74);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: bold;
+        }
+
+        .input-group {
+            margin-bottom: 30px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-wrapper h4 {
+            color: #f9f9f9;
+            margin-bottom: 8px;
+            text-align: left;
+            margin-left: 20px;
+        }
+
+        .input {
+            background-color: #010201;
+            border: 1px solid #343434;
+            width: 90%;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 16px;
+            color: #f9f9f9;
+        }
+
+        .input:focus {
+            outline: none;
+            border-color: #0b9d74;
+        }
+
+        #calculate-btn {
+            font-weight: 700;
+            font-size: 0.9375rem;
+            background-image: linear-gradient(to bottom, #4CAF50, #3e8e41);
+            margin: 30px 0;
+            padding: 12px 40px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #f9f9f9;
+        }
+
+        #calculate-btn:hover {
+            background-image: linear-gradient(to bottom, #3e8e41, #4CAF50);
+            transform: translateY(-2px);
+        }
+
+        .result-container {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #010201;
+            display: none;
+        }
+
+        .result-container.show {
+            display: block;
+        }
+
+        .bmi-result {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            background-image: linear-gradient(to right, #541bbe, #0b9d74);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .bmi-description {
+            font-size: 18px;
+            color: #f9f9f9;
+            margin-top: 10px;
+        }
+
+        #diet-plan-btn {
+            display: none;
+            font-weight: 700;
+            font-size: 0.9375rem;
+            background-image: linear-gradient(to bottom, #541bbe, #0b9d74);
+            margin: 20px auto;
+            padding: 12px 40px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #f9f9f9;
+            width: auto;
+        }
+
+        #diet-plan-btn:hover {
+            background-image: linear-gradient(to bottom, #0b9d74, #541bbe);
+            transform: translateY(-2px);
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-image: linear-gradient(to bottom, #541bbe, #0b9d74);
+            border: none;
+            border-radius: 8px;
+            color: #f9f9f9;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(84, 27, 190, 0.3);
+            background-image: linear-gradient(to bottom, #0b9d74, #541bbe);
+        }
+    </style>
 </head>
-<body class="grid">
+<body>
+    <button class="back-btn" onclick="window.location.href='home.html'">Home</button>
+    
     <div class="container">
         <h1>BMI Calculator</h1>
         <div class="input-group">
             <div class="input-wrapper">
                 <h4>Add Your Weight (KG)</h4>
-                <input type="number" class="input" id="weight" placeholder="e.g., 70" min="1" step="1">
+                <input type="number" class="input" id="weight" placeholder="e.g., 70" min="1" step="0.1">
             </div>
             <div class="input-wrapper">
                 <h4>Add Your Height (CM)</h4>
-                <input type="number" class="input" id="height" placeholder="e.g., 175" min="1" step="1">
+                <input type="number" class="input" id="height" placeholder="e.g., 175" min="1" step="0.1">
             </div>
         </div>
-        <button id="calculate-btn"><span>Calculate</span></button>
-        <div class="result-container">
+        <button id="calculate-btn">Calculate</button>
+        <div class="result-container" id="result-container">
             <div id="bmi-result" class="bmi-result"></div>
-            <div id="bmi-description"></div>
+            <div id="bmi-description" class="bmi-description"></div>
         </div>
+        <button id="diet-plan-btn">View Diet Plan</button>
     </div>
+
     <script>
+        const weightInput = document.getElementById('weight');
+        const heightInput = document.getElementById('height');
         const calculateBtn = document.getElementById('calculate-btn');
-        calculateBtn.addEventListener('click', calculateBMI);
+        const dietPlanBtn = document.getElementById('diet-plan-btn');
+        const bmiResult = document.getElementById('bmi-result');
+        const bmiDescription = document.getElementById('bmi-description');
+        const resultContainer = document.getElementById('result-container');
+
+        let currentBMI = 0;
 
         function calculateBMI() {
-            const weight = parseInt(document.getElementById('weight').value);
-            const height = parseInt(document.getElementById('height').value);
+            const weight = parseFloat(weightInput.value);
+            const height = parseFloat(heightInput.value);
 
-            if (isNaN(weight) || isNaN(height) || weight <= 0 || height <= 0) {
-                document.getElementById('bmi-result').textContent = 'Please enter valid weight and height.';
-                document.getElementById('bmi-description').textContent = '';
+            if (!weight || !height || weight <= 0 || height <= 0) {
+                bmiResult.textContent = 'Please enter valid weight and height.';
+                bmiDescription.textContent = '';
+                dietPlanBtn.style.display = 'none';
+                resultContainer.style.display = 'block';
                 return;
             }
 
             const bmi = weight / Math.pow(height / 100, 2);
-            const bmiResult = document.getElementById('bmi-result');
-            const bmiDescription = document.getElementById('bmi-description');
-
+            currentBMI = bmi;
+            
+            resultContainer.style.display = 'block';
             bmiResult.textContent = `Your BMI is: ${bmi.toFixed(2)}`;
 
             if (bmi < 18.5) {
                 bmiDescription.textContent = 'You are underweight.';
             } else if (bmi < 25) {
-                bmiDescription.textContent = 'You are normal weight.';
+                bmiDescription.textContent = 'You have a normal weight.';
             } else if (bmi < 30) {
                 bmiDescription.textContent = 'You are overweight.';
             } else {
                 bmiDescription.textContent = 'You are obese.';
             }
+
+            dietPlanBtn.style.display = 'block';
         }
+
+        calculateBtn.addEventListener('click', calculateBMI);
+        
+        dietPlanBtn.addEventListener('click', function() {
+            window.location.href = `diet.plan.html?bmi=${currentBMI.toFixed(2)}`;
+        });
     </script>
 </body>
 </html>
