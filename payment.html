@@ -10,20 +10,80 @@
             background: linear-gradient(180deg, #797979 0%, #242424 100%);
         }
         .header {
-          background-color: #1a1a1a;
-          padding: 1rem 0;
-      }
+            background-color: #1a1a1a;
+            padding: 1rem 0;
+        }
+        .loader {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .success-message {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
     </style>
 </head>
 <body class="min-h-screen gradient-bg flex flex-col">
+    <!-- Loader -->
+    <div id="loader" class="loader">
+        <div class="bg-white p-8 rounded-lg flex flex-col items-center">
+            <div class="spinner"></div>
+            <p class="mt-4 text-gray-700">Processing payment...</p>
+        </div>
+    </div>
+
+    <!-- Success Message -->
+    <div id="successMessage" class="success-message bg-white p-8 rounded-lg shadow-xl">
+        <div class="text-center">
+            <div class="w-16 h-16 bg-green-100 rounded-full mx-auto flex items-center justify-center">
+                <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            <h2 class="mt-4 text-2xl font-bold text-gray-800">Payment Received Successfully!</h2>
+            <p class="mt-2 text-gray-600">Thank you for your payment.</p>
+            <button onclick="window.location.reload()" class="mt-6 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
+                Done
+            </button>
+        </div>
+    </div>
+
     <!-- Header -->
     <header class="header">
         <div class="container mx-auto px-4 flex justify-between items-center">
             <a href="/" class="text-white text-xl font-bold">PAYMENT</a>
             <nav>
                 <ul class="flex space-x-6">
-                    <li><a href="/" class="text-white hover:text-gray-300">Home</a></li>
-                    
+                    <li><a href="index.html" class="text-white hover:text-gray-300">Home</a></li>
                 </ul>
             </nav>
         </div>
@@ -68,8 +128,19 @@
     <script>
         document.getElementById('paymentForm').addEventListener('submit', function(event) {
             event.preventDefault();
-            // Here you can add your payment processing logic
-            alert('Payment submitted!'); // For demonstration purposes
+            
+            // Show loader
+            const loader = document.getElementById('loader');
+            const successMessage = document.getElementById('successMessage');
+            loader.style.display = 'flex';
+            
+            // Wait exactly 3 seconds
+            setTimeout(function() {
+                // Hide loader
+                loader.style.display = 'none';
+                // Show success message
+                successMessage.style.display = 'block';
+            }, 3000); // 3 seconds delay
         });
     </script>
 </body>
