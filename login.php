@@ -2,6 +2,14 @@
 session_start();
 require_once 'config.php';
 
+header('Content-Type: application/json');
+
+$response = array(
+    'success' => false,
+    'message' => '',
+    'redirect' => ''
+);
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = mysqli_real_escape_string($conn, $_POST['username']);
     $password = $_POST['password'];
@@ -22,20 +30,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $_SESSION["id"] = $id;
                         $_SESSION["username"] = $username;
                         
-                        header("location: index.html");
-                        exit();
+                        $response['success'] = true;
+                        $response['redirect'] = 'profile.php';
                     } else {
-                        echo "Invalid username or password.";
+                        $response['message'] = "Invalid username or password.";
                     }
                 }
             } else {
-                echo "Invalid username or password.";
+                $response['message'] = "Invalid username or password.";
             }
         } else {
-            echo "Oops! Something went wrong. Please try again later.";
+            $response['message'] = "Oops! Something went wrong. Please try again later.";
         }
         $stmt->close();
     }
+    $conn->close();
 }
-$conn->close();
+
+echo json_encode($response);
 ?>
