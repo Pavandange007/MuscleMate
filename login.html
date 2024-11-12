@@ -187,32 +187,6 @@
       transition: opacity 0.3s ease-in-out;
     }
 
-    /* Error message styles */
-    .error-message {
-        display: none;
-        position: fixed;
-        top: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: #ff4444;
-        color: white;
-        padding: 15px;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        z-index: 2000;
-        text-align: center;
-    }
-
-    .error-message .close-btn {
-        background: none;
-        border: none;
-        color: white;
-        float: right;
-        cursor: pointer;
-        margin-left: 10px;
-        font-weight: bold;
-    }
-
     /* Media queries for responsive design */
     @media (max-width: 900px) {
       section span {
@@ -236,150 +210,142 @@
     </style>
 </head>
 <body>
-    <!-- Error Message Container -->
-    <div id="error-message" class="error-message">
-        <span id="error-text"></span>
-        <button class="close-btn" onclick="closeError()">×</button>
-    </div>
-
     <section>
-        <!-- Background spans -->
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        
+      <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
         <div class="signin">
             <div class="content">
                 <h2 id="formTitle">Login</h2>
                 
                 <!-- Login Form -->
-                <form id="loginForm" class="form">
+                <form action="login.php" method="POST" class="form" id="loginForm">
                     <div class="inputBox">
                         <input type="text" name="username" required>
                         <i>Username</i>
@@ -440,7 +406,6 @@
                 loginForm.style.display = 'none';
                 signupForm.style.display = 'block';
                 formTitle.textContent = 'Sign Up';
-                closeError(); // Hide any existing error messages
             });
 
             showLogin.addEventListener('click', function(e) {
@@ -448,7 +413,6 @@
                 signupForm.style.display = 'none';
                 loginForm.style.display = 'block';
                 formTitle.textContent = 'Login';
-                closeError(); // Hide any existing error messages
             });
 
             // Password confirmation validation
@@ -458,44 +422,10 @@
                 
                 if (password.value !== confirm_password.value) {
                     e.preventDefault();
-                    showError('Passwords do not match!');
+                    alert('Passwords do not match!');
                 }
             });
-
-            // Login form submission
-            loginForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const formData = new FormData(this);
-
-                fetch('login.php', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        window.location.href = data.redirect;
-                    } else {
-                        showError(data.message);
-                    }
-                })
-                .catch(error => {
-                    showError('An error occurred. Please try again.');
-                });
-            });
         });
-
-        function showError(message) {
-            const errorDiv = document.getElementById('error-message');
-            const errorText = document.getElementById('error-text');
-            errorText.textContent = message;
-            errorDiv.style.display = 'block';
-        }
-
-        function closeError() {
-            const errorDiv = document.getElementById('error-message');
-            errorDiv.style.display = 'none';
-        }
     </script>
 </body>
 </html>
