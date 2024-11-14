@@ -2,13 +2,8 @@
 session_start();
 require_once 'config.php';
 
-header('Content-Type: application/json');
-
-$response = array(
-    'success' => false,
-    'message' => '',
-    'redirect' => ''
-);
+// Initialize error message variable
+$error_message = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = mysqli_real_escape_string($conn, $_POST['username']);
@@ -30,22 +25,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $_SESSION["id"] = $id;
                         $_SESSION["username"] = $username;
                         
-                        $response['success'] = true;
-                        $response['redirect'] = 'profile.php';
+                        // Success redirect with JavaScript
+                        echo '<script>
+                            const redirectUrl = sessionStorage.getItem("redirectUrl");
+                            if (redirectUrl) {
+                                sessionStorage.removeItem("redirectUrl");
+                                window.location.href = redirectUrl;
+                            } else {
+                                window.location.href = "profile.php";
+                            }
+                        </script>';
+                        exit();
                     } else {
-                        $response['message'] = "Invalid username or password.";
+                        $error_message = "Invalid username or password.";
                     }
                 }
             } else {
-                $response['message'] = "Invalid username or password.";
+                $error_message = "Invalid username or password.";
             }
         } else {
-            $response['message'] = "Oops! Something went wrong. Please try again later.";
+            $error_message = "Oops! Something went wrong. Please try again later.";
         }
         $stmt->close();
     }
     $conn->close();
 }
-
-echo json_encode($response);
 ?>
+
+<!-- Add this at the top of your HTML body -->
+<?php if (!empty($error_message)): ?>
+    <div id="error-popup" style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%); 
+                                background-color: #ff4444; color: white; padding: 15px; 
+                                border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); 
+                                z-index: 1000;">
+        <?php echo htmlspecialchars($error_message); ?>
+        <button onclick="this.parentElement.style.display='none';" 
+                style="background: none; border: none; color: white; float: right; 
+                       cursor: pointer; margin-left: 10px; font-weight: bold;">
+            ×
+        </button>
+    </div>
+<?php endif; ?>
