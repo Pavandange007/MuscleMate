@@ -2,6 +2,9 @@
 session_start();
 require_once 'config.php';
 
+// Initialize error message variable
+$error_message = "";
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = mysqli_real_escape_string($conn, $_POST['username']);
     $password = $_POST['password'];
@@ -22,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $_SESSION["id"] = $id;
                         $_SESSION["username"] = $username;
                         
-                        // Check if there's a redirect URL in session storage
+                        // Success redirect with JavaScript
                         echo '<script>
                             const redirectUrl = sessionStorage.getItem("redirectUrl");
                             if (redirectUrl) {
@@ -34,20 +37,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </script>';
                         exit();
                     } else {
-                        echo "Invalid username or password.";
+                        $error_message = "Invalid username or password.";
                     }
                 }
             } else {
-                echo "Invalid username or password.";
+                $error_message = "Invalid username or password.";
             }
         } else {
-            echo "Oops! Something went wrong. Please try again later.";
+            $error_message = "Oops! Something went wrong. Please try again later.";
         }
         $stmt->close();
     }
+    $conn->close();
 }
-$conn->close();
 ?>
+
+<!-- Add this at the top of your HTML body -->
+<?php if (!empty($error_message)): ?>
+    <div id="error-popup" style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%); 
+                                background-color: #ff4444; color: white; padding: 15px; 
+                                border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); 
+                                z-index: 1000;">
+        <?php echo htmlspecialchars($error_message); ?>
+        <button onclick="this.parentElement.style.display='none';" 
+                style="background: none; border: none; color: white; float: right; 
+                       cursor: pointer; margin-left: 10px; font-weight: bold;">
+            ×
+        </button>
+    </div>
+<?php endif; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -87,15 +105,37 @@ $conn->close();
             padding: 20px;
         }
 
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
         .welcome {
             font-size: 28px;
             font-weight: 600;
-            margin-bottom: 30px;
             color: var(--text-primary);
             border-left: 4px solid var(--cyan);
             padding-left: 15px;
         }
 
+        .logout-button {
+            background: var(--medium-grey);
+            color: var(--text-primary);
+            border: 1px solid var(--cyan);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+
+        .logout-button:hover {
+            background: var(--cyan);
+        }
+
+        /* Rest of the existing styles remain exactly the same */
         .dashboard {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -301,9 +341,13 @@ $conn->close();
 </head>
 <body>
     <div class="container">
-        <h1 class="welcome">Welcome!</h1>
+        <div class="header-container">
+            <h1 class="welcome">Welcome <?php echo $_SESSION['username'] ?>!</h1>
+            <button class="logout-button" onclick="window.location.href='logout.php'">Logout</button>
+        </div>
         
         <div class="dashboard">
+            <!-- Rest of the body content remains exactly the same -->
             <div class="card">
                 <div class="card-header">Profile Overview</div>
                 <div class="form-group">
@@ -392,113 +436,208 @@ $conn->close();
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Save select values to localStorage
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // All the existing JavaScript code remains exactly the same
+        // Load initial data from API
+        fetch('api.php', {
+            method: 'GET',
+            credentials: 'include'
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Populate form fields with API data
+            if (data.age) document.getElementById('age').value = data.age;
+            if (data.targetWeight) document.getElementById('targetWeight').value = data.targetWeight;
+            if (data.workoutStreak) document.getElementById('workoutStreak').value = data.workoutStreak;
+            
+            // Load saved values for selects
             const selects = document.querySelectorAll('select');
             selects.forEach(select => {
-                // Load saved value if exists
+                if (data[select.id]) {
+                    select.value = data[select.id];
+                } else {
+                    // Fallback to localStorage if API data isn't available
+                    const savedValue = localStorage.getItem(select.id);
+                    if (savedValue) {
+                        select.value = savedValue;
+                    }
+                }
+            });
+
+            // Load challenge progress
+            if (data.pushupProgress) {
+                pushupProgress = parseInt(data.pushupProgress);
+                lastPushupDate = data.lastPushupDate;
+                updateChallengeDisplay();
+            }
+        })
+        .catch(error => {
+            console.error('Error loading data:', error);
+            // Fallback to localStorage if API fails
+            loadFromLocalStorage();
+        });
+
+        function loadFromLocalStorage() {
+            const selects = document.querySelectorAll('select');
+            selects.forEach(select => {
                 const savedValue = localStorage.getItem(select.id);
                 if (savedValue) {
                     select.value = savedValue;
                 }
+            });
+        }
 
-                // Save on change
-                select.addEventListener('change', function() {
-                    localStorage.setItem(this.id, this.value);
+        // Save data to API
+        function saveToAPI(data) {
+            fetch('api.php', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Data saved successfully');
+            })
+            .catch(error => {
+                console.error('Error saving data:', error);
+                // Fallback to localStorage if API fails
+                localStorage.setItem(data.key, data.value);
+            });
+        }
+
+        // Handle select changes
+        const selects = document.querySelectorAll('select');
+        selects.forEach(select => {
+            select.addEventListener('change', function() {
+                saveToAPI({
+                    key: this.id,
+                    value: this.value
                 });
-            });
-
-            // Initialize pushup challenge elements
-            const challengeProgress = document.querySelector('.challenge-progress strong');
-            const completeButton = document.querySelector('.mark-complete');
-            const resetButton = document.querySelector('.reset-button');
-            const cooldownSpan = document.querySelector('.cooldown-timer');
-
-            // Initialize progress from localStorage
-            let pushupProgress = parseInt(localStorage.getItem('pushupProgress')) || 0;
-            let lastPushupDate = localStorage.getItem('lastPushupDate') || null;
-
-            // Update initial display
-            challengeProgress.textContent = `${pushupProgress}/30 days`;
-
-            function canComplete() {
-                if (!lastPushupDate) return true;
-                const lastDate = new Date(lastPushupDate);
-                const now = new Date();
-                const hoursDiff = (now - lastDate) / (1000 * 60 * 60);
-                return hoursDiff >= 24;
-            }
-
-            function updateCooldownDisplay() {
-                if (!lastPushupDate) {
-                    cooldownSpan.textContent = '';
-                    enableButton();
-                    return;
-                }
-
-                const now = new Date();
-                const lastDate = new Date(lastPushupDate);
-                const timeLeft = 24 * 60 * 60 * 1000 - (now - lastDate);
-
-                if (timeLeft <= 0) {
-                    cooldownSpan.textContent = '';
-                    enableButton();
-                    return;
-                }
-
-                const hoursLeft = Math.floor(timeLeft / (1000 * 60 * 60));
-                const minutesLeft = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-                cooldownSpan.textContent = `Next available in: ${hoursLeft}h ${minutesLeft}m`;
-                disableButton();
-            }
-
-            function enableButton() {
-                completeButton.disabled = false;
-                completeButton.style.opacity = '1';
-                completeButton.style.cursor = 'pointer';
-            }
-
-            function disableButton() {
-                completeButton.disabled = true;
-                completeButton.style.opacity = '0.5';
-                completeButton.style.cursor = 'not-allowed';
-            }
-
-            // Update cooldown display every minute
-            setInterval(updateCooldownDisplay, 60000);
-            updateCooldownDisplay();
-
-            completeButton.addEventListener('click', function() {
-                if (!canComplete()) return;
-
-                pushupProgress++;
-                if (pushupProgress > 30) pushupProgress = 30;
-                
-                lastPushupDate = new Date().toISOString();
-
-                localStorage.setItem('pushupProgress', pushupProgress);
-                localStorage.setItem('lastPushupDate', lastPushupDate);
-
-                challengeProgress.textContent = `${pushupProgress}/30 days`;
-                updateCooldownDisplay();
-
-                const originalText = this.textContent;
-                this.textContent = 'Completed!';
-                setTimeout(() => {
-                    this.textContent = originalText;
-                }, 1000);
-            });
-
-            resetButton.addEventListener('click', function() {
-                pushupProgress = 0;
-                lastPushupDate = null;
-                localStorage.removeItem('pushupProgress');
-                localStorage.removeItem('lastPushupDate');
-                challengeProgress.textContent = '0/30 days';
-                updateCooldownDisplay();
+                localStorage.setItem(this.id, this.value); // Backup to localStorage
             });
         });
-    </script>
+
+        // Handle input changes
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('change', function() {
+                saveToAPI({
+                    key: this.id,
+                    value: this.value
+                });
+            });
+        });
+
+        // Initialize pushup challenge elements
+        const challengeProgress = document.querySelector('.challenge-progress strong');
+        const completeButton = document.querySelector('.mark-complete');
+        const resetButton = document.querySelector('.reset-button');
+        const cooldownSpan = document.querySelector('.cooldown-timer');
+
+        // Initialize progress
+        let pushupProgress = 0;
+        let lastPushupDate = null;
+
+        function updateChallengeDisplay() {
+            challengeProgress.textContent = `${pushupProgress}/30 days`;
+            updateCooldownDisplay();
+        }
+
+        function canComplete() {
+            if (!lastPushupDate) return true;
+            const lastDate = new Date(lastPushupDate);
+            const now = new Date();
+            const hoursDiff = (now - lastDate) / (1000 * 60 * 60);
+            return hoursDiff >= 24;
+        }
+
+        function updateCooldownDisplay() {
+            if (!lastPushupDate) {
+                cooldownSpan.textContent = '';
+                enableButton();
+                return;
+            }
+
+            const now = new Date();
+            const lastDate = new Date(lastPushupDate);
+            const timeLeft = 24 * 60 * 60 * 1000 - (now - lastDate);
+
+            if (timeLeft <= 0) {
+                cooldownSpan.textContent = '';
+                enableButton();
+                return;
+            }
+
+            const hoursLeft = Math.floor(timeLeft / (1000 * 60 * 60));
+            const minutesLeft = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            cooldownSpan.textContent = `Next available in: ${hoursLeft}h ${minutesLeft}m`;
+            disableButton();
+        }
+
+        function enableButton() {
+            completeButton.disabled = false;
+            completeButton.style.opacity = '1';
+            completeButton.style.cursor = 'pointer';
+        }
+
+        function disableButton() {
+            completeButton.disabled = true;
+            completeButton.style.opacity = '0.5';
+            completeButton.style.cursor = 'not-allowed';
+        }
+
+        // Update cooldown display every minute
+        setInterval(updateCooldownDisplay, 60000);
+        updateCooldownDisplay();
+
+        completeButton.addEventListener('click', function() {
+            if (!canComplete()) return;
+
+            pushupProgress++;
+            if (pushupProgress > 30) pushupProgress = 30;
+            
+            lastPushupDate = new Date().toISOString();
+
+            // Save to API
+            saveToAPI({
+                pushupProgress: pushupProgress,
+                lastPushupDate: lastPushupDate
+            });
+
+            // Backup to localStorage
+            localStorage.setItem('pushupProgress', pushupProgress);
+            localStorage.setItem('lastPushupDate', lastPushupDate);
+
+            updateChallengeDisplay();
+
+            const originalText = this.textContent;
+            this.textContent = 'Completed!';
+            setTimeout(() => {
+                this.textContent = originalText;
+            }, 1000);
+        });
+
+        resetButton.addEventListener('click', function() {
+            pushupProgress = 0;
+            lastPushupDate = null;
+
+            // Reset in API
+            saveToAPI({
+                pushupProgress: 0,
+                lastPushupDate: null
+            });
+
+            // Reset in localStorage
+            localStorage.removeItem('pushupProgress');
+            localStorage.removeItem('lastPushupDate');
+            
+            updateChallengeDisplay();
+        });
+    });
+</script>
 </body>
 </html>
