@@ -66,9 +66,9 @@
             <a href="/" class="text-white text-xl font-bold">FITNESS SUPPLEMENTS</a>
             <nav>
                 <ul class="flex space-x-6">
-                    <li><a href="/" class="text-white hover:text-gray-300">Home</a></li>
-                    <li><a href="/about" class="text-white hover:text-gray-300">About</a></li>
-                    <li><a href="/login" class="text-white hover:text-gray-300">Login</a></li>
+                    <li><a href="Home.html" class="text-white hover:text-gray-300">Home</a></li>
+                    <li><a href="about-us.html" class="text-white hover:text-gray-300">About</a></li>
+                    <li><a href="login.html" class="text-white hover:text-gray-300">Login</a></li>
                 </ul>
             </nav>
         </div>
@@ -108,7 +108,7 @@
                         <span class="font-bold">Total:</span>
                         <span class="font-bold">RS. 0</span>
                     </div>
-                    <button class="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700">
+                    <button id="proceedToCheckout" class="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700">
                         Proceed to Checkout
                     </button>
                 </div>
@@ -153,6 +153,7 @@
         const cartBadge = document.getElementById('cartBadge');
         const productsGrid = document.getElementById('productsGrid');
         const cartTotal = document.getElementById('cartTotal');
+        const proceedToCheckout = document.getElementById('proceedToCheckout');
 
         // Initialize Products
         function initializeProducts() {
@@ -188,17 +189,23 @@
         }
 
         function updateCartTotal() {
-    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    cartTotal.innerHTML = `
-        <div class="flex justify-between mb-4">
-            <span class="font-bold">Total:</span>
-            <span class="font-bold">RS. ${total}</span>
-        </div>
-        <a href="payment.html" class="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 text-center block">
-            Proceed to Checkout
-        </a>
-    `;
-}
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            cartTotal.innerHTML = `
+                <div class="flex justify-between mb-4">
+                    <span class="font-bold">Total:</span>
+                    <span class="font-bold">RS. ${total}</span>
+                </div>
+                ${total > 0 ? `
+                <a href="payment.html" class="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 text-center block">
+                    Proceed to Checkout
+                </a>
+                ` : `
+                <button onclick="showPopup()" class="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 text-center block">
+                    Proceed to Checkout
+                </button>
+                `}
+            `;
+        }
 
         function updateCartDisplay() {
             if (cart.length === 0) {
@@ -278,16 +285,24 @@
             }
         }
 
+        function showPopup() {
+            if (cart.length === 0) {
+                alert("Please add items to your cart before proceeding to checkout.");
+            } else {
+                window.location.href = "payment.html";
+            }
+        }
+
         // Event Listeners
         cartButton.addEventListener('click', toggleCart);
         closeCart.addEventListener('click', toggleCart);
+        proceedToCheckout.addEventListener('click', showPopup);
 
         // Initialize
         initializeProducts();
         updateCartDisplay();
 
         let isLoggedIn = false;
-        
     </script>
 </body>
 </html>
