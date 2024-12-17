@@ -6,7 +6,7 @@
     <title>Payment Gateway</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <style>
-        /* ... keeping all your existing styles ... */
+        
         .gradient-bg {
             background: linear-gradient(180deg, #797979 0%, #242424 100%);
         }
@@ -63,8 +63,7 @@
     </style>
 </head>
 <body class="min-h-screen gradient-bg flex flex-col">
-    <!-- Keeping all your existing HTML structure... -->
-    <!-- Loader -->
+   
     <div id="loader" class="loader">
         <div class="bg-white p-8 rounded-lg flex flex-col items-center">
             <div class="spinner"></div>
@@ -72,7 +71,7 @@
         </div>
     </div>
 
-    <!-- Success Message -->
+    
     <div id="successMessage" class="success-message bg-white p-8 rounded-lg shadow-xl">
         <div class="text-center">
             <div class="w-16 h-16 bg-green-100 rounded-full mx-auto flex items-center justify-center">
@@ -88,7 +87,7 @@
         </div>
     </div>
 
-    <!-- Header -->
+
     <header class="header">
         <div class="container mx-auto px-4 flex justify-between items-center">
             <a href="/" class="text-white text-xl font-bold">PAYMENT</a>
@@ -100,7 +99,7 @@
         </div>
     </header>
 
-    <!-- Main Content -->
+  
     <div class="flex-grow flex items-center justify-center py-12">
         <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
             <h2 class="text-2xl font-bold text-center mb-6">Payment Information</h2>
@@ -142,14 +141,14 @@
     </div>
 
     <script>
-        // Format card number with spaces
+       
         document.getElementById('cardNumber').addEventListener('input', function(e) {
             let value = e.target.value.replace(/\s/g, '');
             let formattedValue = value.replace(/(\d{4})/g, '$1 ').trim();
             e.target.value = formattedValue;
         });
 
-        // Format expiry date
+     
         document.getElementById('expiryDate').addEventListener('input', function(e) {
             let value = e.target.value.replace(/\D/g, '');
             if (value.length >= 2) {
@@ -158,7 +157,7 @@
             e.target.value = value;
         });
 
-        // Validation functions
+       
         function validateCardName(name) {
             return /^[a-zA-Z\s]+$/.test(name);
         }
@@ -206,14 +205,14 @@
         document.getElementById('paymentForm').addEventListener('submit', function(event) {
             event.preventDefault();
             
-            // Get form values
+           
             const cardName = document.getElementById('cardName').value;
             const cardNumber = document.getElementById('cardNumber').value;
             const expiryDate = document.getElementById('expiryDate').value;
             const cvv = document.getElementById('cvv').value;
             const billingAddress = document.getElementById('billingAddress').value;
 
-            // Validate all fields
+           
             let isValid = true;
 
             if (!validateCardName(cardName)) {
@@ -251,7 +250,7 @@
                 showError('billingAddress', false);
             }
 
-            // If all validations pass, proceed with payment
+            
             if (isValid) {
                 const loader = document.getElementById('loader');
                 const successMessage = document.getElementById('successMessage');

@@ -1,114 +1,263 @@
-/* Global styles */
+/* Reset and base styles */
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #4CAF50;
+    --secondary: #2196F3;
+    --background: #121212;
+    --card-bg: #1E1E1E;
+    --text: #FFFFFF;
+    --text-secondary: #B0B0B0;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background: #f5f5f5;
-    color: #333;
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    background: var(--background);
+    min-height: 100vh;
+    padding: 2rem;
+    color: var(--text);
+    background-image: 
+        radial-gradient(circle at 15% 50%, rgba(76, 175, 80, 0.08) 0%, transparent 30%),
+        radial-gradient(circle at 85% 30%, rgba(33, 150, 243, 0.08) 0%, transparent 30%);
 }
 
 .container {
-    width: 90%;
     max-width: 1200px;
-    margin: 50px auto;
+    margin: 0 auto;
+    padding: 20px;
+    animation: fadeIn 0.8s ease-out;
 }
 
-/* Header styling */
+/* Header styles */
 header {
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 3rem;
+    padding: 2.5rem;
+    background: var(--card-bg);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    animation: slideDown 0.8s ease-out;
 }
 
 header h1 {
-    font-size: 36px;
-    color: #2c3e50;
-    margin-bottom: 10px;
-    transition: color 0.3s ease;
+    color: var(--text);
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    position: relative;
+    display: inline-block;
+}
+
+header h1::after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 3px;
+    bottom: -10px;
+    left: 25%;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    border-radius: 2px;
+    transform: scaleX(0);
+    animation: underlineExpand 0.8s ease-out forwards 0.5s;
 }
 
 header p {
-    font-size: 18px;
-    color: #34495e;
-    transition: color 0.3s ease;
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    opacity: 0;
+    animation: fadeIn 0.8s ease-out forwards 0.3s;
 }
 
-header:hover h1 {
-    color: #16a085;
-}
-
-header:hover p {
-    color: #27ae60;
-}
-
-/* Profile Section */
+/* Profile section styles */
 .profile {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+    animation: fadeIn 0.8s ease-out 0.2s;
 }
 
-/* Profile Cards */
+/* Card styles */
 .card {
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    width: calc(33.333% - 20px);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 2.5rem;
     text-align: center;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    position: relative;
+    overflow: hidden;
 }
 
-.card h2 {
-    font-size: 24px;
-    margin-bottom: 15px;
-    color: #2c3e50;
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.05),
+        transparent
+    );
+    transition: 0.5s;
 }
 
-.card p, .card ul {
-    font-size: 16px;
-    line-height: 1.6;
-    color: #34495e;
+.card:hover::before {
+    left: 100%;
 }
 
 .card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.3);
 }
 
-.bmi-card p#bmi {
-    font-size: 36px;
-    color: #27ae60;
+.card h2 {
+    color: var(--text);
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    position: relative;
+    display: inline-block;
 }
 
-.bmi-status {
-    font-size: 18px;
-    color: #2980b9;
+/* Button styles */
+button {
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 30px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 6px 15px rgba(76, 175, 80, 0.3);
 }
 
-/* List styling */
-.card ul {
-    list-style: none;
-    padding: 0;
+button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: 0.5s;
 }
 
-.card ul li {
-    margin: 10px 0;
+button:hover::before {
+    left: 100%;
 }
 
-/* Responsive Design */
-@media (max-width: 900px) {
-    .card {
-        width: calc(50% - 20px);
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+/* Specific card styles */
+.bmi-card {
+    border-top: 5px solid var(--primary);
+}
+
+.diet-plan {
+    border-top: 5px solid var(--secondary);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
     }
 }
 
-@media (max-width: 600px) {
-    .card {
-        width: 100%;
+@keyframes underlineExpand {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+}
+
+/* Loading animation for cards */
+.card {
+    animation: cardAppear 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes cardAppear {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
     }
 }
+
+/* Responsive design */
+@media (max-width: 768px) {
+    body {
+        padding: 1rem;
+    }
+    
+    header {
+        padding: 1.5rem;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .card {
+        padding: 1.5rem;
+    }
+    
+    button {
+        padding: 12px 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.8rem;
+    }
+    
+    header p {
+        font-size: 1rem;
+    }
+    
+    .card h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Add this to your HTML head */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
